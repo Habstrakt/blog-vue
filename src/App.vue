@@ -6,6 +6,19 @@ import Aside from "@/components/Aside.vue";
 
 export default {
   components: { Header, Main, Aside },
+  methods: {
+    scrollUp() {
+      const scrollDuration = 300;
+      const scrollStep = -window.pageYOffset / (scrollDuration / 15);
+      let scrollInterval = setInterval(() => {
+        if (window.pageYOffset !== 0) {
+          window.scrollBy(0, scrollStep);
+        } else {
+          clearInterval(scrollInterval);
+        }
+      }, 15);
+    },
+  },
 };
 </script>
 
@@ -17,6 +30,15 @@ export default {
       <router-view></router-view>
     </div>
   </div>
+  <div @click="scrollUp" class="btn btn-secondary">
+    <img src="./assets/img/arrow-up.svg" alt="" />
+  </div>
 </template>
 
-<style scoped></style>
+<style>
+.btn-secondary {
+  position: fixed;
+  bottom: 100px;
+  right: 60px;
+}
+</style>
