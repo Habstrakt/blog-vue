@@ -2,10 +2,12 @@
   <header>
     <div class="container">
       <div class="row">
-        <div class="col">
-          <router-link to="/">Logo</router-link>
+        <div class="col-6">
+          <router-link to="/"
+            ><img src="../assets/img/logo.png" alt="logo"
+          /></router-link>
         </div>
-        <div class="col">
+        <div class="col-6">
           <nav>
             <ul>
               <li>
@@ -33,6 +35,9 @@ header {
   padding: 18px;
   height: auto;
 }
+.row {
+  align-items: center;
+}
 ul {
   list-style-type: none;
   padding: 0;
@@ -49,5 +54,8 @@ li {
 }
 .menu_text:hover {
   color: #fff;
+}
+img {
+  width: 180px;
 }
 </style>
