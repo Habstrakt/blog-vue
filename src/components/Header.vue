@@ -2,7 +2,9 @@
   <header>
     <div class="container">
       <div class="row">
-        <div class="col">Logo</div>
+        <div class="col">
+          <router-link to="/">Logo</router-link>
+        </div>
         <div class="col">
           <nav>
             <ul>

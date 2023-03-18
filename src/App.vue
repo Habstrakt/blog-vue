@@ -14,7 +14,7 @@ export default {
   <div class="container">
     <div class="row">
       <Aside />
-      <Main />
+      <router-view></router-view>
     </div>
   </div>
 </template>

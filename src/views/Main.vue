@@ -1,48 +1,45 @@
+<script>
+import axios from "axios";
+
+export default {
+  data() {
+    return {
+      posts: {},
+    };
+  },
+  methods: {
+    async getPosts() {
+      try {
+        const response = await axios.get(
+          "https://jsonplaceholder.typicode.com/posts"
+        );
+        this.posts = response.data;
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  },
+  mounted() {
+    this.getPosts();
+  },
+};
+</script>
+
 <template>
   <div class="col-lg-9">
     <main>
       <section>
-        <article>
-          <div>
-            <h3>
-              <a class="text_title" href="#"> Title </a>
-            </h3>
-            <p class="text">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis
-              quidem sequi laudantium repellat, perferendis nostrum eveniet.
-              Inventore aliquid rerum sed accusamus quidem! Porro quibusdam
-              sapiente aliquid unde laboriosam accusantium ipsum.
-            </p>
-            <p class="date">Дата 01.01.2023</p>
-          </div>
-        </article>
-        <article>
-          <div>
-            <h3>
-              <a class="text_title" href="#"> Title </a>
-            </h3>
-            <p class="text">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis
-              quidem sequi laudantium repellat, perferendis nostrum eveniet.
-              Inventore aliquid rerum sed accusamus quidem! Porro quibusdam
-              sapiente aliquid unde laboriosam accusantium ipsum.
-            </p>
-            <p class="date">Дата 01.01.2023</p>
-          </div>
-        </article>
-        <article>
-          <div>
-            <h3>
-              <a class="text_title" href="#"> Title </a>
-            </h3>
-            <p class="text">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis
-              quidem sequi laudantium repellat, perferendis nostrum eveniet.
-              Inventore aliquid rerum sed accusamus quidem! Porro quibusdam
-              sapiente aliquid unde laboriosam accusantium ipsum.
-            </p>
-            <p class="date">Дата 01.01.2023</p>
-          </div>
+        <article v-for="post in posts" :key="post.id">
+          <h3>
+            <router-link class="text_title" :to="`/post/${post.id}`">
+              {{ post.title }}
+            </router-link>
+          </h3>
+          <p class="text">
+            {{ post.body }}
+          </p>
+          <p class="date">Дата 01.01.2023</p>
         </article>
       </section>
     </main>

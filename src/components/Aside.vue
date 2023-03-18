@@ -2,7 +2,7 @@
   <div class="col-lg-3">
     <aside>
       <div>
-        <img src="../assets/img/bocchi.gif" alt="" />
+        <img src="../assets/img/avatar.jpg" alt="" />
         <p>текст</p>
       </div>
     </aside>
