@@ -6,8 +6,16 @@ import Aside from "@/components/Aside.vue";
 
 export default {
   components: { Header, Main, Aside },
+  data() {
+    return {
+      showScrollBtn: false,
+    };
+  },
+  mounted() {
+    window.addEventListener("scroll", this.handleScroll);
+  },
   methods: {
-    scrollUp() {
+    scrollBtn() {
       const scrollDuration = 300;
       const scrollStep = -window.pageYOffset / (scrollDuration / 15);
       let scrollInterval = setInterval(() => {
@@ -17,6 +25,13 @@ export default {
           clearInterval(scrollInterval);
         }
       }, 15);
+    },
+    handleScroll() {
+      if (window.pageYOffset > 1000) {
+        this.showScrollBtn = true;
+      } else {
+        this.showScrollBtn = false;
+      }
     },
   },
 };
@@ -30,7 +45,7 @@ export default {
       <router-view></router-view>
     </div>
   </div>
-  <div @click="scrollUp" class="btn btn-secondary">
+  <div v-if="showScrollBtn" @click="scrollBtn" class="btn btn-secondary">
     <img src="./assets/img/arrow-up.svg" alt="" />
   </div>
 </template>
