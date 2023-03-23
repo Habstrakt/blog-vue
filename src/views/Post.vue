@@ -58,7 +58,7 @@ h3 {
 article {
   padding: 50px;
   background-color: white;
-  margin: 14px 0 14px;
+  margin: 21px 0 14px;
 }
 .text_title {
   color: black;

@@ -1,14 +1,18 @@
 <script>
 import axios from "axios";
 import Spinner from "@/components/Spinner.vue";
+import Pagination from "@/components/Pagination.vue";
 export default {
   data() {
     return {
       posts: [],
+      currentPage: 1,
+      postsPerPage: 5,
     };
   },
   components: {
     Spinner,
+    Pagination,
   },
   methods: {
     async getPosts() {
@@ -22,9 +26,25 @@ export default {
         console.error(error);
       }
     },
+    nextPage() {
+      this.currentPage++;
+    },
+    prevPage() {
+      this.currentPage--;
+    },
   },
   mounted() {
     this.getPosts();
+  },
+  computed: {
+    totalPages() {
+      return Math.ceil(this.posts.length / this.postsPerPage);
+    },
+    displayedPosts() {
+      const startIndex = (this.currentPage - 1) * this.postsPerPage;
+      const endIndex = startIndex + this.postsPerPage;
+      return this.posts.slice(startIndex, endIndex);
+    },
   },
 };
 </script>
@@ -34,7 +54,7 @@ export default {
     <main>
       <section>
         <template v-if="posts.length > 0">
-          <article v-for="post in posts" :key="post.id">
+          <article v-for="post in displayedPosts" :key="post.id">
             <h3>
               <router-link
                 class="text_title"
@@ -52,6 +72,10 @@ export default {
         </template>
       </section>
     </main>
+    <div class="pagination">
+      <button v-if="currentPage < totalPages" @click="nextPage">Next</button>
+      <button v-if="currentPage > 1" @click="prevPage">Preview</button>
+    </div>
   </div>
 </template>
 
