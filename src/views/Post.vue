@@ -1,23 +1,6 @@
-<template>
-  <div class="col-lg-9">
-    <section>
-      <article>
-        <div>
-          <h3>
-            <router-link class="text_title" to="/">
-              {{ post.title }}
-            </router-link>
-          </h3>
-          <p class="text">{{ post.body }}</p>
-          <p class="date">Дата 01.01.2023</p>
-        </div>
-      </article>
-    </section>
-  </div>
-</template>
-
 <script>
 import axios from "axios";
+import Spinner from "../components/Spinner.vue";
 
 export default {
   props: ["id"],
@@ -26,15 +9,39 @@ export default {
       post: {},
     };
   },
-  created() {
-    axios
-      .get(`https://jsonplaceholder.typicode.com/posts/${this.id}`)
-      .then((response) => {
-        this.post = response.data;
-      });
+  components: { Spinner },
+  async created() {
+    try {
+      const response = await axios.get(
+        `http://blog.test/wp-json/wp/v2/posts/${this.id}`
+      );
+      this.post = response.data;
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   },
 };
 </script>
+
+<template>
+  <div class="col-lg-9">
+    <section>
+      <article v-if="!!post.content">
+        <h3>
+          <router-link class="text_title" to="/">
+            {{ post.title.rendered }}
+          </router-link>
+        </h3>
+        <div v-html="post.content.rendered" class="text"></div>
+        <p class="date">{{ post.formatted_date }}</p>
+      </article>
+      <div v-else>
+        <Spinner />
+      </div>
+    </section>
+  </div>
+</template>
 
 <style scoped>
 h3 {
@@ -59,5 +66,8 @@ article {
 }
 .text_title:hover {
   color: rgb(168, 12, 77);
+}
+ul {
+  list-style-type: none;
 }
 </style>

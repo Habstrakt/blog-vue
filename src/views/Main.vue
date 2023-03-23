@@ -1,17 +1,20 @@
 <script>
 import axios from "axios";
-
+import Spinner from "@/components/Spinner.vue";
 export default {
   data() {
     return {
-      posts: {},
+      posts: [],
     };
+  },
+  components: {
+    Spinner,
   },
   methods: {
     async getPosts() {
       try {
         const response = await axios.get(
-          "https://jsonplaceholder.typicode.com/posts"
+          "http://blog.test/wp-json/wp/v2/posts"
         );
         this.posts = response.data;
         console.log(response.data);
@@ -30,17 +33,23 @@ export default {
   <div class="col-lg-9">
     <main>
       <section>
-        <article v-for="post in posts" :key="post.id">
-          <h3>
-            <router-link class="text_title" :to="`/post/${post.id}`">
-              {{ post.title }}
-            </router-link>
-          </h3>
-          <p class="text">
-            {{ post.body }}
-          </p>
-          <p class="date">Дата 01.01.2023</p>
-        </article>
+        <template v-if="posts.length > 0">
+          <article v-for="post in posts" :key="post.id">
+            <h3>
+              <router-link
+                class="text_title"
+                :to="{ name: 'post', params: { id: post.id } }"
+              >
+                {{ post.title.rendered }}
+              </router-link>
+            </h3>
+            <div v-html="post.content.rendered" class="text"></div>
+            <p class="date">{{ post.formatted_date }}</p>
+          </article>
+        </template>
+        <template v-else>
+          <Spinner />
+        </template>
       </section>
     </main>
   </div>
@@ -72,5 +81,9 @@ article {
 }
 .text_title:hover {
   color: rgb(168, 12, 77);
+}
+
+ul {
+  list-style-type: none;
 }
 </style>

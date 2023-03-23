@@ -7,7 +7,7 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     { path: "/", component: Main },
-    { path: "/post/:id", name: "Post", component: Post, props: true },
+    { path: "/post/:id", name: "post", component: Post, props: true },
     { path: "/not_found", name: "NotFound", component: NotFound },
     { path: "/:catchAll(.*)", redirect: "/not_found" },
   ],
