@@ -78,7 +78,12 @@ export default {
       </ul>
     </div>
     <div class="input-group mb-3" v-else>
-      <input class="form-control" type="text" v-model.trim="temporaryTodo" />
+      <input
+        class="form-control"
+        type="text"
+        placeholder="Edit todo..."
+        v-model.trim="temporaryTodo"
+      />
       <button class="btn btn-outline-secondary" type="button" @click="saveTodo">
         Save
       </button>

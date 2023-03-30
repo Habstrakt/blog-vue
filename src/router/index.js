@@ -9,13 +9,13 @@ import Todo from "@/views/Todo.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: "/", component: Main },
+    { path: "/", name: "main", component: Main },
     { path: "/post/:id", name: "post", component: Post, props: true },
     { path: "/not_found", name: "NotFound", component: NotFound },
     { path: "/:catchAll(.*)", redirect: "/not_found" },
     { path: "/about", component: About },
     { path: "/portfolio", component: Portfolio },
-    { path: "/portfolio/todo", component: Todo },
+    { path: "/portfolio/todo", name: "todo", component: Todo },
   ],
 });
 

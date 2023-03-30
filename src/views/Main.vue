@@ -8,12 +8,14 @@ export default {
       posts: [],
       currentPage: 1,
       postsPerPage: 20,
+      showScrollBtn: false,
     };
   },
   components: {
     Spinner,
     Pagination,
   },
+
   methods: {
     async getPosts() {
       try {
@@ -26,8 +28,8 @@ export default {
         console.error(error);
       }
     },
-    up() {
-      const scrollDuration = 300;
+    scrollBtn() {
+      const scrollDuration = 800;
       const scrollStep = -window.pageYOffset / (scrollDuration / 15);
       let scrollInterval = setInterval(() => {
         if (window.pageYOffset !== 0) {
@@ -37,17 +39,28 @@ export default {
         }
       }, 15);
     },
+    handleScroll() {
+      if (window.pageYOffset > 1000) {
+        this.showScrollBtn = true;
+      } else {
+        this.showScrollBtn = false;
+      }
+    },
     nextPage() {
       this.currentPage++;
-      this.up();
+      this.scrollBtn();
     },
     prevPage() {
       this.currentPage--;
-      this.up();
+      this.scrollBtn();
     },
   },
   mounted() {
     this.getPosts();
+    window.addEventListener("scroll", this.handleScroll);
+  },
+  unmounted() {
+    window.removeEventListener("scroll", this.handleScroll);
   },
   computed: {
     totalPages() {
@@ -86,6 +99,9 @@ export default {
         </template>
       </section>
     </main>
+    <div v-if="showScrollBtn" @click="scrollBtn" class="btn btn-secondary">
+      <img src="../assets/img/arrow-up.svg" alt="" />
+    </div>
     <div class="pagination justify-content-end">
       <button
         class="btn btn-primary"
@@ -133,5 +149,10 @@ ul {
 }
 .pagination {
   margin: 20px 0;
+}
+.btn-secondary {
+  position: fixed;
+  bottom: 100px;
+  right: 60px;
 }
 </style>
