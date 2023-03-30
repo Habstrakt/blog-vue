@@ -11,21 +11,30 @@ export default {
   },
   methods: {
     addNewTodo() {
-      this.todos.push(this.todoText);
-      this.todoText = "";
+      if (!this.todoText) {
+        alert("Ошибка! Поле пустое. Добавьте Todo!");
+      } else {
+        this.todos.push(this.todoText);
+        this.todoText = "";
+      }
     },
     deleteTodo(index) {
       this.todos.splice(index, 1);
     },
-    showEditTodo(index) {
+    showEditTodo(todo, index) {
+      this.temporaryTodo = todo;
       this.editingTodo = true;
       this.editingIndex = index;
     },
     saveTodo() {
-      this.todos[this.editingIndex] = this.temporaryTodo;
-      this.temporaryTodo = "";
-      this.editingIndex = null;
-      this.editingTodo = false;
+      if (!this.temporaryTodo) {
+        alert("Ошибка! Поле пустое. Добавьте текст или удалите его");
+      } else {
+        this.todos[this.editingIndex] = this.temporaryTodo;
+        this.temporaryTodo = "";
+        this.editingIndex = null;
+        this.editingTodo = false;
+      }
     },
     cancelEditTodo() {
       this.editingTodo = false;
@@ -37,23 +46,49 @@ export default {
 <template>
   <div class="col-lg-9 todo-wrapper">
     <h2 class="title">Todo List</h2>
-    <div class="input-block">
-      <input type="text" placeholder="Add task...." v-model.trim="todoText" />
-      <button @click="addNewTodo">+</button>
+    <div v-if="!editingTodo" class="input-block input-group mb-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Add task...."
+        v-model.trim="todoText"
+      />
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        @click="addNewTodo"
+      >
+        Add Todo
+      </button>
     </div>
     <div v-if="!editingTodo">
       <ul>
         <li v-for="(todo, index) in todos" :key="index">
           {{ todo }}
-          <button @click="showEditTodo(index)">Edit</button>
-          <button @click="deleteTodo(index)">Delete</button>
+          <button
+            class="btn btn-outline-secondary"
+            @click="showEditTodo(todo, index)"
+          >
+            Edit
+          </button>
+          <button class="btn btn-outline-secondary" @click="deleteTodo(index)">
+            Delete
+          </button>
         </li>
       </ul>
     </div>
-    <div v-else>
-      <input type="text" v-model.trim="temporaryTodo" />
-      <button @click="saveTodo">Save</button>
-      <button @click="cancelEditTodo">Cancel</button>
+    <div class="input-group mb-3" v-else>
+      <input class="form-control" type="text" v-model.trim="temporaryTodo" />
+      <button class="btn btn-outline-secondary" type="button" @click="saveTodo">
+        Save
+      </button>
+      <button
+        class="btn btn-outline-secondary"
+        type="button"
+        @click="cancelEditTodo"
+      >
+        Cancel
+      </button>
     </div>
   </div>
 </template>
