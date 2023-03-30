@@ -29,8 +29,8 @@ export default {
     return {
       links: [
         {
-          name: "Projects",
-          url: "/works",
+          name: "Portfolio",
+          url: "/portfolio",
         },
         {
           name: "/b/",

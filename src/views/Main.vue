@@ -7,7 +7,7 @@ export default {
     return {
       posts: [],
       currentPage: 1,
-      postsPerPage: 5,
+      postsPerPage: 20,
     };
   },
   components: {
@@ -26,11 +26,24 @@ export default {
         console.error(error);
       }
     },
+    up() {
+      const scrollDuration = 300;
+      const scrollStep = -window.pageYOffset / (scrollDuration / 15);
+      let scrollInterval = setInterval(() => {
+        if (window.pageYOffset !== 0) {
+          window.scrollBy(0, scrollStep);
+        } else {
+          clearInterval(scrollInterval);
+        }
+      }, 15);
+    },
     nextPage() {
       this.currentPage++;
+      this.up();
     },
     prevPage() {
       this.currentPage--;
+      this.up();
     },
   },
   mounted() {
@@ -38,6 +51,7 @@ export default {
   },
   computed: {
     totalPages() {
+      console.log(Math.ceil(this.posts.length / this.postsPerPage));
       return Math.ceil(this.posts.length / this.postsPerPage);
     },
     displayedPosts() {
@@ -72,9 +86,17 @@ export default {
         </template>
       </section>
     </main>
-    <div class="pagination">
-      <button v-if="currentPage < totalPages" @click="nextPage">Next</button>
-      <button v-if="currentPage > 1" @click="prevPage">Preview</button>
+    <div class="pagination justify-content-end">
+      <button
+        class="btn btn-primary"
+        v-if="currentPage < totalPages"
+        @click="nextPage"
+      >
+        Next
+      </button>
+      <button class="btn btn-primary" v-if="currentPage > 1" @click="prevPage">
+        Preview
+      </button>
     </div>
   </div>
 </template>
@@ -106,8 +128,10 @@ article {
 .text_title:hover {
   color: rgb(168, 12, 77);
 }
-
 ul {
   list-style-type: none;
+}
+.pagination {
+  margin: 20px 0;
 }
 </style>

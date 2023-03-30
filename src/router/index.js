@@ -3,7 +3,8 @@ import Main from "@/views/Main.vue";
 import Post from "@/views/Post.vue";
 import NotFound from "@/views/NotFound.vue";
 import About from "@/views/About.vue";
-import Works from "@/views/Works.vue";
+import Portfolio from "@/views/Portfolio.vue";
+import Todo from "@/views/Todo.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,7 +14,8 @@ const router = createRouter({
     { path: "/not_found", name: "NotFound", component: NotFound },
     { path: "/:catchAll(.*)", redirect: "/not_found" },
     { path: "/about", component: About },
-    { path: "/works", component: Works },
+    { path: "/portfolio", component: Portfolio },
+    { path: "/portfolio/todo", component: Todo },
   ],
 });
 

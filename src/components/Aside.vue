@@ -1,9 +1,16 @@
 <template>
   <div class="col-lg-3">
     <aside>
+      <img src="../assets/img/avatar.jpg" alt="" />
       <div>
-        <img src="../assets/img/avatar.jpg" alt="" />
-        <p>текст</p>
+        <p>Repository and contacts</p>
+        <a href="https://github.com/Habstrakt"
+          ><img
+            class="github-logo"
+            src="../assets/img/github_icon.svg"
+            alt=""
+          />
+        </a>
       </div>
     </aside>
   </div>
@@ -22,5 +29,9 @@ img {
 p {
   margin-top: 10px;
   text-align: center;
+}
+.github-logo {
+  width: 30px;
+  padding-right: 5px;
 }
 </style>
