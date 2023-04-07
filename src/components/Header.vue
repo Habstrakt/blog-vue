@@ -30,7 +30,7 @@ export default {
       links: [
         {
           name: "Portfolio",
-          url: "/portfolio",
+          url: { name: "portfolio" },
         },
         {
           name: "/b/",

@@ -2,6 +2,7 @@
 import axios from "axios";
 import Spinner from "@/components/Spinner.vue";
 import Pagination from "@/components/Pagination.vue";
+import Aside from "@/components/Aside.vue";
 export default {
   data() {
     return {
@@ -14,8 +15,8 @@ export default {
   components: {
     Spinner,
     Pagination,
+    Aside,
   },
-
   methods: {
     async getPosts() {
       try {
@@ -23,7 +24,6 @@ export default {
           "http://blog.test/wp-json/wp/v2/posts"
         );
         this.posts = response.data;
-        console.log(response.data);
       } catch (error) {
         console.error(error);
       }
@@ -77,6 +77,7 @@ export default {
 </script>
 
 <template>
+  <Aside />
   <div class="col-lg-9">
     <main>
       <section>

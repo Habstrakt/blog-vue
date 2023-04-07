@@ -13,7 +13,6 @@ export default {
   <Header />
   <div class="container">
     <div class="row">
-      <Aside />
       <router-view></router-view>
     </div>
   </div>

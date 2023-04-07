@@ -71,7 +71,10 @@ export default {
           >
             Edit
           </button>
-          <button class="btn btn-outline-secondary" @click="deleteTodo(index)">
+          <button
+            class="btn btn-danger link-light ms-1"
+            @click="deleteTodo(index)"
+          >
             Delete
           </button>
         </li>

@@ -4,10 +4,22 @@ export default {
     return {
       portfolios: [
         {
-          name: "Список задач",
+          title: "Счетчик",
+          url: { name: "counter" },
+          text: "Обычный счетчик (counter).",
+          instruments: ["vue3"],
+        },
+        {
+          title: "Список задач",
           url: { name: "todo" },
-          text: "Простой список задач. Имеется функционал добавления, удаления и редактирования задач.",
+          text: "Список задач, в котором пользователь может добавлять, удалять и редактировать записи",
           instruments: ["vue3", "bootstrap"],
+        },
+        {
+          title: "Веб-приложение для погоды",
+          url: { name: "weather" },
+          text: "Приложение, которое показывает текущую погоду в различных городах",
+          instruments: ["vue3", "API"],
         },
       ],
     };
@@ -15,25 +27,28 @@ export default {
 };
 </script>
 <template>
-  <div class="col-lg-9 card-group">
-    <div class="row row-cols-1 row-cols-md-2 g-4">
-      <div class="col" v-for="work in portfolios" :key="work">
-        <div class="card">
+  <div class="col-lg-12">
+    <div class="card-group">
+      <div class="row">
+        <div class="card col-lg-6" v-for="work in portfolios" :key="work">
           <div class="card-body">
-            <h5 class="card-title">{{ work.name }}</h5>
+            <h5 class="card-title">{{ work.title }}</h5>
             <p class="card-text">
               {{ work.text }}
             </p>
-            <span>Использовал: </span>
+            <span class="card-text">Использовал: </span>
             <span
               :class="{ 'pe-1': index < work.instruments.length - 1 }"
-              :key="index"
               v-for="(item, index) in work.instruments"
+              :key="index"
             >
               {{ item }}
             </span>
-            <br />
-            <router-link :to="work.url">Перейти</router-link>
+          </div>
+          <div class="card-footer">
+            <router-link :to="work.url" class="btn btn-primary">
+              <small class="text-body-secondary">Перейти</small>
+            </router-link>
           </div>
         </div>
       </div>
@@ -46,5 +61,11 @@ export default {
   padding: 50px;
   background-color: white;
   margin-top: 21px;
+}
+.card-text {
+  height: 60px;
+}
+.card-footer {
+  background-color: inherit;
 }
 </style>

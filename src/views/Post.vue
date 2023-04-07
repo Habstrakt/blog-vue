@@ -25,7 +25,7 @@ export default {
 </script>
 
 <template>
-  <div class="col-lg-9">
+  <div class="col-lg-12">
     <section>
       <article v-if="!!post.content">
         <h3>
