@@ -4,64 +4,66 @@ export default {
   data() {
     return {
       templateData: {
-        coord: {
-          lon: 10.99,
-          lat: 44.34,
-        },
         weather: [
           {
-            id: 501,
-            main: "Rain",
-            description: "moderate rain",
-            icon: "10d",
+            main: null,
           },
         ],
         main: {
-          temp: 298.48,
-          feels_like: 298.74,
-          temp_min: 297.56,
-          temp_max: 300.05,
-        },
-        wind: {
-          speed: 0.62,
-        },
-        rain: {
-          "1h": 3.16,
-        },
-        clouds: {
-          all: 100,
+          temp: null,
+          feels_like: null,
         },
         name: null,
       },
+      cityName: null,
+      error: null,
+      showInformation: false,
     };
   },
   methods: {
     async getWeather() {
       try {
         const response = await axios.get(
-          `https://api.openweathermap.org/data/2.5/weather?q=${this.templateData.name}&appid=042b2ee2c83661dfb42ab95b64d38260&lang=ru&units=metric`
+          `https://api.openweathermap.org/data/2.5/weather?q=${this.cityName}&appid=042b2ee2c83661dfb42ab95b64d38260&lang=ru&units=metric`
         );
         this.templateData = response.data;
+        this.cityName = this.templateData.name;
+        this.cityName = "";
+        this.showInformation = true;
       } catch (error) {
-        console.log(error);
+        this.error = error.response.data.message;
+        console.log(this.error);
       }
-      console.log(this.templateData.name);
     },
   },
 };
 </script>
 
 <template>
-  <div class="col-lg-12">
-    <input
-      type="text"
-      placeholder="Введите город"
-      v-model="this.templateData.name"
-    />
-    <button @click="getWeather">Узнать погоду</button>
-    {{ this.templateData.name }}
-    {{ this.templateData.main.temp }}
-    {{ this.templateData.weather[0].description }}
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <input
+          type="text"
+          placeholder="Введите город"
+          v-model="this.cityName"
+        />
+        <button @click="getWeather">Узнать погоду</button>
+        <div v-if="!error" v-show="showInformation">
+          <h3>Температура в городе {{ this.templateData.name }}</h3>
+          <p>Город: {{ this.templateData.name }}</p>
+          <p>Температура: {{ Math.ceil(this.templateData.main.temp) }}&deg;</p>
+          <p>
+            Ощущается как:
+            {{ Math.ceil(this.templateData.main.feels_like) }}&deg;
+          </p>
+          <p>Описание: {{ this.templateData.weather[0].description }}</p>
+        </div>
+        <div v-else>
+          {{ this.error }}
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 

@@ -19,22 +19,28 @@ export default {
 </script>
 
 <template>
-  <div class="col-lg-12">
-    <div class="counter-wrapper">
-      <div class="counter">
-        {{ counter }}
-      </div>
-      <div class="buttons">
-        <button type="button" @click="plus" class="btn btn-success">+</button>
-        <br />
-        <button
-          v-if="counter > 0"
-          type="button"
-          @click="minus"
-          class="btn btn-danger"
-        >
-          -
-        </button>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="counter-wrapper">
+          <div class="counter">
+            {{ counter }}
+          </div>
+          <div class="buttons">
+            <button type="button" @click="plus" class="btn btn-success">
+              +
+            </button>
+            <br />
+            <button
+              v-if="counter > 0"
+              type="button"
+              @click="minus"
+              class="btn btn-danger"
+            >
+              -
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

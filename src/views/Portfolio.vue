@@ -21,34 +21,44 @@ export default {
           text: "Приложение, которое показывает текущую погоду в различных городах",
           instruments: ["vue3", "API"],
         },
+        {
+          title: "Сайт доставки пиццы",
+          url: { name: "pizzas" },
+          text: "Сайт пиццерии. Страница продуктов, а так же корзина",
+          instruments: ["vue3", "vuex"],
+        },
       ],
     };
   },
 };
 </script>
 <template>
-  <div class="col-lg-12">
-    <div class="card-group">
-      <div class="row">
-        <div class="card col-lg-6" v-for="work in portfolios" :key="work">
-          <div class="card-body">
-            <h5 class="card-title">{{ work.title }}</h5>
-            <p class="card-text">
-              {{ work.text }}
-            </p>
-            <span class="card-text">Использовал: </span>
-            <span
-              :class="{ 'pe-1': index < work.instruments.length - 1 }"
-              v-for="(item, index) in work.instruments"
-              :key="index"
-            >
-              {{ item }}
-            </span>
-          </div>
-          <div class="card-footer">
-            <router-link :to="work.url" class="btn btn-primary">
-              <small class="text-body-secondary">Перейти</small>
-            </router-link>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card-group">
+          <div class="row">
+            <div class="card col-lg-6" v-for="work in portfolios" :key="work">
+              <div class="card-body">
+                <h5 class="card-title">{{ work.title }}</h5>
+                <p class="card-text">
+                  {{ work.text }}
+                </p>
+                <span class="card-text">Использовал: </span>
+                <span
+                  :class="{ 'pe-1': index < work.instruments.length - 1 }"
+                  v-for="(item, index) in work.instruments"
+                  :key="index"
+                >
+                  {{ item }}
+                </span>
+              </div>
+              <div class="card-footer">
+                <router-link :to="work.url" class="btn btn-primary">
+                  <small class="text-body-secondary">Перейти</small>
+                </router-link>
+              </div>
+            </div>
           </div>
         </div>
       </div>

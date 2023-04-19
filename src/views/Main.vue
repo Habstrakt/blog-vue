@@ -77,43 +77,51 @@ export default {
 </script>
 
 <template>
-  <Aside />
-  <div class="col-lg-9">
-    <main>
-      <section>
-        <template v-if="posts.length > 0">
-          <article v-for="post in displayedPosts" :key="post.id">
-            <h3>
-              <router-link
-                class="text_title"
-                :to="{ name: 'post', params: { id: post.id } }"
-              >
-                {{ post.title.rendered }}
-              </router-link>
-            </h3>
-            <div v-html="post.content.rendered" class="text"></div>
-            <p class="date">{{ post.formatted_date }}</p>
-          </article>
-        </template>
-        <template v-else>
-          <Spinner />
-        </template>
-      </section>
-    </main>
-    <div v-if="showScrollBtn" @click="scrollBtn" class="btn btn-secondary">
-      <img src="../assets/img/arrow-up.svg" alt="" />
-    </div>
-    <div class="pagination justify-content-end">
-      <button
-        class="btn btn-primary"
-        v-if="currentPage < totalPages"
-        @click="nextPage"
-      >
-        Next
-      </button>
-      <button class="btn btn-primary" v-if="currentPage > 1" @click="prevPage">
-        Preview
-      </button>
+  <div class="container">
+    <div class="row">
+      <Aside />
+      <div class="col-lg-9">
+        <main>
+          <section>
+            <template v-if="posts.length > 0">
+              <article v-for="post in displayedPosts" :key="post.id">
+                <h3>
+                  <router-link
+                    class="text_title"
+                    :to="{ name: 'post', params: { id: post.id } }"
+                  >
+                    {{ post.title.rendered }}
+                  </router-link>
+                </h3>
+                <div v-html="post.content.rendered" class="text"></div>
+                <p class="date">{{ post.formatted_date }}</p>
+              </article>
+            </template>
+            <template v-else>
+              <Spinner />
+            </template>
+          </section>
+        </main>
+        <div v-if="showScrollBtn" @click="scrollBtn" class="btn btn-secondary">
+          <img src="../assets/img/arrow-up.svg" alt="" />
+        </div>
+        <div class="pagination justify-content-end">
+          <button
+            class="btn btn-primary"
+            v-if="currentPage < totalPages"
+            @click="nextPage"
+          >
+            Next
+          </button>
+          <button
+            class="btn btn-primary"
+            v-if="currentPage > 1"
+            @click="prevPage"
+          >
+            Preview
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>

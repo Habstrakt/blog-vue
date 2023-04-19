@@ -11,9 +11,5 @@ export default {
 
 <template>
   <Header />
-  <div class="container">
-    <div class="row">
-      <router-view></router-view>
-    </div>
-  </div>
+  <router-view></router-view>
 </template>

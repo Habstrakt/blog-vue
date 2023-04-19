@@ -1,6 +1,10 @@
 <template>
-  <div class="col-lg-9">
-    <div class="about-block">about block</div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="about-block">about block</div>
+      </div>
+    </div>
   </div>
 </template>
 

@@ -1,6 +1,10 @@
 <template>
-  <div class="col-lg-9">
-    <h2 class="not_found">Страница не найдена</h2>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <h2 class="not_found">Страница не найдена</h2>
+      </div>
+    </div>
   </div>
 </template>
 

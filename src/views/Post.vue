@@ -25,21 +25,25 @@ export default {
 </script>
 
 <template>
-  <div class="col-lg-12">
-    <section>
-      <article v-if="!!post.content">
-        <h3>
-          <router-link class="text_title" to="/">
-            {{ post.title.rendered }}
-          </router-link>
-        </h3>
-        <div v-html="post.content.rendered" class="text"></div>
-        <p class="date">{{ post.formatted_date }}</p>
-      </article>
-      <div v-else>
-        <Spinner />
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <section>
+          <article v-if="!!post.content">
+            <h3>
+              <router-link class="text_title" to="/">
+                {{ post.title.rendered }}
+              </router-link>
+            </h3>
+            <div v-html="post.content.rendered" class="text"></div>
+            <p class="date">{{ post.formatted_date }}</p>
+          </article>
+          <div v-else>
+            <Spinner />
+          </div>
+        </section>
       </div>
-    </section>
+    </div>
   </div>
 </template>
 
