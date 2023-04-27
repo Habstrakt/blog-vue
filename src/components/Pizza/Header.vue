@@ -1,28 +1,27 @@
+<script>
+export default {
+  data() {
+    return {
+      menuItem: ["Пицца", "Закуски", "Напитки"],
+    };
+  },
+};
+</script>
+
 <template>
   <nav>
     <div class="menu-nav">
-      <div class="logo">Vue Pizza Logo</div>
+      <div class="logo">Pizza Vue</div>
       <ul>
-        <li class="menu-item">
-          <a href="">Пицца</a>
-        </li>
-        <li class="menu-item">
-          <a href="">Закуски</a>
-        </li>
-        <li class="menu-item">
-          <a href="">Напитки</a>
+        <li v-for="item in menuItem" class="menu-item" :key="item">
+          <a href="">{{ item }}</a>
         </li>
       </ul>
-      <div class="cart"><a href="">В корзину</a></div>
-    </div>
-  </nav>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="wrapper">asd</div>
+      <div class="cart">
+        <a href="">В корзину</a>
       </div>
     </div>
-  </div>
+  </nav>
 </template>
 
 <style scoped>
@@ -32,7 +31,7 @@ nav {
   padding-top: 10px;
 }
 .menu-nav {
-  width: 1280px;
+  max-width: 1280px;
   margin-left: auto;
   margin-right: auto;
   position: relative;
@@ -54,5 +53,10 @@ li,
   right: 0px;
   z-index: 1;
   height: 100%;
+}
+@media (max-width: 414px) {
+  a {
+    font-size: 12px;
+  }
 }
 </style>
