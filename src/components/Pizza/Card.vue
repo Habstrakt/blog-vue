@@ -16,12 +16,16 @@ export default {
       const sizeIndex = item.sizes.indexOf(size);
       item.selectedPrice = item.price[sizeIndex];
     },
+    addToCart(item) {
+      item.itemCount++;
+    },
   },
   mounted() {
     this.products = foodsData.products.reduce((acc, item) => {
-      const selectedPrice = item.price ? item.price[0] : item.price;
-      acc.push({ ...item, selectedPrice });
-      return acc;
+      const selectedPrice = Array.isArray(item.price)
+        ? item.price[0]
+        : item.price;
+      return [...acc, { ...item, selectedPrice, itemCount: 0 }];
     }, []);
   },
 };
@@ -43,11 +47,14 @@ export default {
           <div class="product-description">{{ item.description }}</div>
           <ul class="product-sizes">
             <li
-              @click="activeSize(size, item)"
+              @click="activeSize(size, item, index)"
               v-for="size in item.sizes"
               class="size"
               :class="{
                 active: selectedSize === size && selectedId === item.id,
+                first_active:
+                  size === item.sizes[0] &&
+                  item.selectedPrice === item.price[0],
               }"
             >
               {{ size }}
@@ -61,8 +68,8 @@ export default {
             }}
             рублей
           </div>
-          <button type="button" class="btn btn-danger">
-            + Добавить <i>1</i>
+          <button @click="addToCart(item)" type="button" class="btn btn-danger">
+            + Добавить <i v-if="item.itemCount > 0">{{ item.itemCount }}</i>
           </button>
         </div>
       </div>
@@ -121,7 +128,8 @@ img {
   border-radius: 5px;
   cursor: pointer;
 }
-.active {
+.active,
+.first_active {
   border: 1px solid #d21b04;
 }
 
