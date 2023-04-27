@@ -18,9 +18,11 @@ export default {
     },
   },
   mounted() {
-    this.products = foodsData.products.map((item) => {
-      return { ...item, selectedPrice: item.price[0] };
-    });
+    this.products = foodsData.products.reduce((acc, item) => {
+      const selectedPrice = item.price ? item.price[0] : item.price;
+      acc.push({ ...item, selectedPrice });
+      return acc;
+    }, []);
   },
 };
 </script>
@@ -29,7 +31,7 @@ export default {
   <section>
     <div class="row">
       <div
-        v-for="(item, index) in products"
+        v-for="item in products"
         class="product-card col-lg-3 col-md-4 col-sm-6"
         :key="item.id"
       >
@@ -59,7 +61,9 @@ export default {
             }}
             рублей
           </div>
-          <button type="button" class="btn btn-danger">Добавить</button>
+          <button type="button" class="btn btn-danger">
+            + Добавить <i>1</i>
+          </button>
         </div>
       </div>
     </div>
@@ -119,6 +123,22 @@ img {
 }
 .active {
   border: 1px solid #d21b04;
+}
+
+i {
+  display: inline-block;
+  border-radius: 30px;
+  background-color: black;
+  color: #fff;
+  font-weight: 600;
+  width: 22px;
+  height: 22px;
+  font-style: normal;
+  font-size: 13px;
+  line-height: 22px;
+  position: relative;
+  top: 0px;
+  left: 3px;
 }
 @media screen and (max-width: 414px) {
   .product-card {
