@@ -1,41 +1,15 @@
-<script>
-import foodsData from "@/assets/foods.json";
-export default {
-  data() {
-    return {
-      products: {},
-      selectedSize: null,
-      selectedId: null,
-    };
-  },
-  methods: {
-    activeSize(size, item) {
-      this.selectedSize = size;
-      this.selectedId = item.id;
+<script setup>
+import { usePizzaStore } from "@/store/PizzaStore.js";
 
-      const sizeIndex = item.sizes.indexOf(size);
-      item.selectedPrice = item.price[sizeIndex];
-    },
-    addToCart(item) {
-      item.itemCount++;
-    },
-  },
-  mounted() {
-    this.products = foodsData.products.reduce((acc, item) => {
-      const selectedPrice = Array.isArray(item.price)
-        ? item.price[0]
-        : item.price;
-      return [...acc, { ...item, selectedPrice, itemCount: 0 }];
-    }, []);
-  },
-};
+const pizzaStore = usePizzaStore();
+pizzaStore.init();
 </script>
 
 <template>
   <section>
     <div class="row">
       <div
-        v-for="item in products"
+        v-for="item in pizzaStore.products"
         class="product-card col-lg-3 col-md-4 col-sm-6"
         :key="item.id"
       >
@@ -47,11 +21,13 @@ export default {
           <div class="product-description">{{ item.description }}</div>
           <ul class="product-sizes">
             <li
-              @click="activeSize(size, item, index)"
+              @click="pizzaStore.activeSize(size, item)"
               v-for="size in item.sizes"
               class="size"
               :class="{
-                active: selectedSize === size && selectedId === item.id,
+                active:
+                  pizzaStore.selectedSize === size &&
+                  pizzaStore.selectedId === item.id,
                 first_active:
                   size === item.sizes[0] &&
                   item.selectedPrice === item.price[0],
@@ -68,7 +44,14 @@ export default {
             }}
             рублей
           </div>
-          <button @click="addToCart(item)" type="button" class="btn btn-danger">
+          <span v-if="item.itemCount > 0" @click="pizzaStore.clearCount(item)"
+            >Очистить</span
+          >
+          <button
+            @click="pizzaStore.addToCart(item)"
+            type="button"
+            class="btn btn-danger"
+          >
             + Добавить <i v-if="item.itemCount > 0">{{ item.itemCount }}</i>
           </button>
         </div>
