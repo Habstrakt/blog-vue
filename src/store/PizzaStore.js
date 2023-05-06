@@ -6,6 +6,7 @@ export const usePizzaStore = defineStore("pizzaStore", {
     products: [],
     selectedSize: null,
     selectedId: null,
+    currentCart: [],
   }),
   actions: {
     init() {
@@ -38,7 +39,25 @@ export const usePizzaStore = defineStore("pizzaStore", {
     },
     addToCart(item) {
       item.itemCount++;
-      console.log(item);
+
+      const existingItem = this.currentCart.find(
+        (cartItem) =>
+          cartItem.size === item.selectedSize && cartItem.id === item.id
+      );
+
+      if (existingItem) {
+        existingItem.count++;
+      } else {
+        const cart = {
+          id: item.id,
+          name: item.name,
+          count: 1,
+          size: item.selectedSize,
+          price: item.selectedPrice,
+        };
+        this.currentCart.push(cart);
+        console.log(this.currentCart);
+      }
     },
     clearCount(item) {
       item.itemCount = 0;

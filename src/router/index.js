@@ -8,6 +8,7 @@ import Todo from "@/views/Todo.vue";
 import Counter from "@/views/Counter.vue";
 import Weather from "@/views/Weather.vue";
 import Pizza from "@/views/Pizza/Main.vue";
+import Cart from "@/views/Pizza/Cart.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,6 +23,7 @@ const router = createRouter({
     { path: "/portfolio/counter", name: "counter", component: Counter },
     { path: "/portfolio/weather", name: "weather", component: Weather },
     { path: "/portfolio/pizzas", name: "pizzas", component: Pizza },
+    { path: "/portfolio/pizzas/cart", name: "cart", component: Cart },
   ],
 });
 

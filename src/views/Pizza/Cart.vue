@@ -1,0 +1,220 @@
+<template>
+  <main>
+    <section class="basket">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-2">
+            <h1>Корзина</h1>
+            <div class="maskot">
+              <div class="buble">
+                <p>Проверь свой заказ и не забудь добавить вкусности!</p>
+              </div>
+              <div class="logo">
+                <img src="@/assets/img/cart.png" alt="" />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-10">
+            <div class="zakaz">Состав заказа</div>
+            <div class="cart_wrapper">
+              <div class="cart_content">
+                <div class="cart_item d-flex">
+                  <div class="img">
+                    <img
+                      src="@/assets/img/pizza.jpg"
+                      alt=""
+                      width="100"
+                      height="100"
+                    />
+                  </div>
+                  <div class="meta">
+                    <div class="product_name d-flex">
+                      ПИЦЦА С БУЖЕНИНОЙ - 30см
+                    </div>
+                  </div>
+                  <div class="quanity d-flex">
+                    <div class="btn btn-danger d-flex minus">-</div>
+                    <div class="quantity">
+                      <p class="count">1</p>
+                    </div>
+                    <div class="btn btn-danger d-flex plus">+</div>
+                  </div>
+                  <div class="price">
+                    <span>781 ₽</span>
+                  </div>
+                </div>
+              </div>
+              <div class="return_wrap d-flex">
+                <router-link :to="{ name: 'pizzas' }" class="return"
+                  >Вернуться в меню</router-link
+                >
+              </div>
+              <div class="checkout">
+                <div class="checkout_item">
+                  <div class="buttons d-flex">
+                    <div class="summ d-flex">
+                      К оплате: <strong>781 ₽</strong>
+                    </div>
+                    <div class="checkout_cart">Перейти к оформлению</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</template>
+
+<style scoped>
+.basket {
+  margin-top: 20px;
+}
+h1 {
+  margin-bottom: 22px;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 32px;
+  line-height: 43px;
+}
+.basket .buble p {
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 22px 29px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 114.5%;
+  width: 208px;
+  text-align: center;
+  max-width: 100%;
+}
+.logo img {
+  width: 180px;
+  height: 140px;
+}
+.zakaz {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 32px;
+  line-height: 43px;
+  margin-bottom: 22px;
+}
+.cart_content {
+  max-height: 360px;
+  overflow: hidden;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+.cart_item {
+  padding-bottom: 23px;
+  border-bottom: 1px solid #cacaca;
+  margin-bottom: 17px;
+}
+.img {
+  margin-right: 24px;
+  flex: 0 0 72px;
+}
+.meta {
+  flex: 0 0 calc(60% - 96px);
+}
+.product_name {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 24px;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 6px;
+}
+.quanity {
+  flex: 0 0 33%;
+}
+.minus,
+.plus {
+  width: 25px;
+  height: 25px;
+  align-items: center;
+  padding-left: 7px;
+}
+.count {
+  height: 24px;
+  width: 40px;
+  text-align: center;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 24px;
+  background: transparent;
+  border: 0;
+  outline: none;
+}
+.price {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 19px;
+  line-height: 24px;
+}
+.return_wrap {
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+.return {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d21b04;
+  box-sizing: border-box;
+  border-radius: 16px;
+  width: 160px;
+  height: 30px;
+  color: #1b1b1b;
+  text-decoration: none;
+}
+.checkout_item {
+  width: 100%;
+}
+.buttons {
+  justify-content: flex-end;
+  align-items: center;
+}
+.summ {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 32px;
+  line-height: 43px;
+  justify-content: flex-end;
+  text-align: right;
+  color: #1b1b1b;
+  margin-right: 60px;
+}
+strong {
+  margin-left: 20px;
+  font-weight: bold;
+}
+.checkout_cart {
+  background: #d21b04;
+  border-radius: 16px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  height: 48px;
+  color: #fff;
+  font-family: TT Pines;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 24px;
+  transition: 0.5s;
+  text-decoration: none;
+  padding: 0 20px;
+  cursor: pointer;
+}
+</style>

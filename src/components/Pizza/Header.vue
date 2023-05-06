@@ -18,7 +18,7 @@ export default {
         </li>
       </ul>
       <div class="cart">
-        <a href="">В корзину</a>
+        <router-link :to="{ name: 'cart' }">В корзину</router-link>
       </div>
     </div>
   </nav>
