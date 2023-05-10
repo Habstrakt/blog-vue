@@ -1,3 +1,32 @@
+<script>
+import { usePizzaStore } from "@/store/PizzaStore.js";
+
+export default {
+  setup() {
+    const pizzaStore = usePizzaStore();
+    console.log(pizzaStore.currentCart);
+    return { pizzaStore };
+  },
+  methods: {
+    plusItem(item) {
+      item.count++;
+      item.price = item.count * item.selectedPrice;
+      console.log(item);
+    },
+    minusItem(item) {
+      // item.count--;
+      // item.price = item.count * item.selectedPrice;
+      if (item.count > 0) {
+        item.count--;
+        item.price = item.count * item.selectedPrice;
+      } else {
+        item.splice(1);
+      }
+    },
+  },
+};
+</script>
+
 <template>
   <main>
     <section class="basket">
@@ -18,29 +47,37 @@
             <div class="zakaz">Состав заказа</div>
             <div class="cart_wrapper">
               <div class="cart_content">
-                <div class="cart_item d-flex">
+                <div
+                  v-for="item in pizzaStore.currentCart"
+                  class="cart_item d-flex"
+                >
                   <div class="img">
-                    <img
-                      src="@/assets/img/pizza.jpg"
-                      alt=""
-                      width="100"
-                      height="100"
-                    />
+                    <img :src="item.image" alt="" width="100" height="100" />
                   </div>
                   <div class="meta">
                     <div class="product_name d-flex">
-                      ПИЦЦА С БУЖЕНИНОЙ - 30см
+                      {{ item.name }} - {{ item.size }}
                     </div>
                   </div>
                   <div class="quanity d-flex">
-                    <div class="btn btn-danger d-flex minus">-</div>
-                    <div class="quantity">
-                      <p class="count">1</p>
+                    <div
+                      @click="minusItem(item)"
+                      class="btn btn-danger d-flex minus"
+                    >
+                      -
                     </div>
-                    <div class="btn btn-danger d-flex plus">+</div>
+                    <div class="quantity">
+                      <p class="count">{{ item.count }}</p>
+                    </div>
+                    <div
+                      @click="plusItem(item)"
+                      class="btn btn-danger d-flex plus"
+                    >
+                      +
+                    </div>
                   </div>
                   <div class="price">
-                    <span>781 ₽</span>
+                    <span>{{ item.count * item.selectedPrice }}</span>
                   </div>
                 </div>
               </div>
@@ -102,7 +139,7 @@ h1 {
   margin-bottom: 22px;
 }
 .cart_content {
-  max-height: 360px;
+  max-height: 400px;
   overflow: hidden;
   overflow-y: auto;
   margin-bottom: 20px;

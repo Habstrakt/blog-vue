@@ -1,5 +1,11 @@
 <script>
+import { usePizzaStore } from "@/store/PizzaStore.js";
+
 export default {
+  setup() {
+    const pizzaStore = usePizzaStore();
+    return { pizzaStore };
+  },
   data() {
     return {
       menuItem: ["Пицца", "Закуски", "Напитки"],
@@ -19,6 +25,9 @@ export default {
       </ul>
       <div class="cart">
         <router-link :to="{ name: 'cart' }">В корзину</router-link>
+        <i v-if="pizzaStore.totalCount > 0">
+          {{ pizzaStore.totalCount }}
+        </i>
       </div>
     </div>
   </nav>
@@ -53,6 +62,22 @@ li,
   right: 0px;
   z-index: 1;
   height: 100%;
+}
+i {
+  display: inline-block;
+  border-radius: 30px;
+  background-color: red;
+  color: #fff;
+  font-weight: 600;
+  width: 22px;
+  height: 22px;
+  font-style: normal;
+  font-size: 13px;
+  line-height: 22px;
+  position: relative;
+  top: 0px;
+  left: 3px;
+  text-align: center;
 }
 @media (max-width: 414px) {
   a {

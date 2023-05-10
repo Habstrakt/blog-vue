@@ -7,6 +7,7 @@ export const usePizzaStore = defineStore("pizzaStore", {
     selectedSize: null,
     selectedId: null,
     currentCart: [],
+    totalCount: 0,
   }),
   actions: {
     init() {
@@ -39,6 +40,7 @@ export const usePizzaStore = defineStore("pizzaStore", {
     },
     addToCart(item) {
       item.itemCount++;
+      this.totalCount++;
 
       const existingItem = this.currentCart.find(
         (cartItem) =>
@@ -54,9 +56,11 @@ export const usePizzaStore = defineStore("pizzaStore", {
           count: 1,
           size: item.selectedSize,
           price: item.selectedPrice,
+          image: item.imageUrl,
+          selectedPrice: item.selectedPrice,
         };
         this.currentCart.push(cart);
-        console.log(this.currentCart);
+        console.log(cart);
       }
     },
     clearCount(item) {
