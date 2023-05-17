@@ -7,23 +7,6 @@ export default {
     console.log(pizzaStore.currentCart);
     return { pizzaStore };
   },
-  methods: {
-    plusItem(item) {
-      item.count++;
-      item.price = item.count * item.selectedPrice;
-      console.log(item);
-    },
-    minusItem(item) {
-      // item.count--;
-      // item.price = item.count * item.selectedPrice;
-      if (item.count > 0) {
-        item.count--;
-        item.price = item.count * item.selectedPrice;
-      } else {
-        item.splice(1);
-      }
-    },
-  },
 };
 </script>
 
@@ -47,37 +30,38 @@ export default {
             <div class="zakaz">Состав заказа</div>
             <div class="cart_wrapper">
               <div class="cart_content">
-                <div
-                  v-for="item in pizzaStore.currentCart"
-                  class="cart_item d-flex"
-                >
-                  <div class="img">
-                    <img :src="item.image" alt="" width="100" height="100" />
-                  </div>
-                  <div class="meta">
-                    <div class="product_name d-flex">
-                      {{ item.name }} - {{ item.size }}
+                <div v-for="(item, index) in pizzaStore.currentCart">
+                  <div class="cart_item d-flex" v-if="item.count > 0">
+                    <div class="img">
+                      <img :src="item.image" alt="" width="100" height="100" />
                     </div>
-                  </div>
-                  <div class="quanity d-flex">
-                    <div
-                      @click="minusItem(item)"
-                      class="btn btn-danger d-flex minus"
-                    >
-                      -
+                    <div class="meta">
+                      <div class="product_name d-flex">
+                        {{ item.name }} - {{ item.size }}
+                      </div>
                     </div>
-                    <div class="quantity">
-                      <p class="count">{{ item.count }}</p>
+                    <div class="quanity d-flex">
+                      <div
+                        @click="pizzaStore.minusItem(index)"
+                        class="btn btn-danger d-flex minus"
+                      >
+                        -
+                      </div>
+                      <div class="quantity">
+                        <p class="count">
+                          {{ item.count }}
+                        </p>
+                      </div>
+                      <div
+                        @click="pizzaStore.plusItem(item)"
+                        class="btn btn-danger d-flex plus"
+                      >
+                        +
+                      </div>
                     </div>
-                    <div
-                      @click="plusItem(item)"
-                      class="btn btn-danger d-flex plus"
-                    >
-                      +
+                    <div class="price">
+                      <span>{{ item.count * item.selectedPrice }}</span>
                     </div>
-                  </div>
-                  <div class="price">
-                    <span>{{ item.count * item.selectedPrice }}</span>
                   </div>
                 </div>
               </div>
@@ -90,7 +74,8 @@ export default {
                 <div class="checkout_item">
                   <div class="buttons d-flex">
                     <div class="summ d-flex">
-                      К оплате: <strong>781 ₽</strong>
+                      К оплате:
+                      <strong>{{ pizzaStore.totalPriceItem }}</strong>
                     </div>
                     <div class="checkout_cart">Перейти к оформлению</div>
                   </div>

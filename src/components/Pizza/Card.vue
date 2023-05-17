@@ -44,15 +44,15 @@ pizzaStore.init();
             }}
             рублей
           </div>
-          <span v-if="item.itemCount > 0" @click="pizzaStore.clearCount(item)"
-            >Очистить</span
-          >
           <button
             @click="pizzaStore.addToCart(item)"
             type="button"
             class="btn btn-danger"
           >
-            + Добавить <i v-if="item.itemCount > 0">{{ item.itemCount }}</i>
+            + Добавить
+            <i v-if="pizzaStore.getItemCount(item) > 0">{{
+              pizzaStore.getItemCount(item)
+            }}</i>
           </button>
         </div>
       </div>

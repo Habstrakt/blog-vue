@@ -7,7 +7,6 @@ export const usePizzaStore = defineStore("pizzaStore", {
     selectedSize: null,
     selectedId: null,
     currentCart: [],
-    totalCount: 0,
   }),
   actions: {
     init() {
@@ -23,8 +22,9 @@ export const usePizzaStore = defineStore("pizzaStore", {
           {
             ...item,
             selectedPrice,
-            itemCount: 0,
+
             selectedSize,
+            count: 0,
           },
         ];
       }, []);
@@ -39,9 +39,6 @@ export const usePizzaStore = defineStore("pizzaStore", {
       item.selectedSize = item.sizes[sizeIndex];
     },
     addToCart(item) {
-      item.itemCount++;
-      this.totalCount++;
-
       const existingItem = this.currentCart.find(
         (cartItem) =>
           cartItem.size === item.selectedSize && cartItem.id === item.id
@@ -63,8 +60,42 @@ export const usePizzaStore = defineStore("pizzaStore", {
         console.log(cart);
       }
     },
-    clearCount(item) {
-      item.itemCount = 0;
+    minusItem(index) {
+      const item = this.currentCart[index];
+      if (item.count !== 0) {
+        item.count--;
+        item.price = item.count * item.selectedPrice;
+      }
+      if (item.count === 0) {
+        this.currentCart.splice(index, 1);
+      }
+    },
+    plusItem(item) {
+      item.count++;
+      item.price = item.count * item.selectedPrice;
+      console.log(item);
+    },
+  },
+  getters: {
+    totalPriceItem() {
+      return this.currentCart.reduce((acc, nextItem) => {
+        return nextItem.count > 1
+          ? acc + nextItem.selectedPrice * nextItem.count
+          : acc + nextItem.selectedPrice;
+      }, 0);
+    },
+    getItemCount: (state) => (item) => {
+      const cartItem = state.currentCart.find(
+        (cartItem) =>
+          cartItem.id === item.id && cartItem.size === item.selectedSize
+      );
+      return cartItem ? cartItem.count : 0;
+    },
+    totalCount() {
+      return this.currentCart.reduce((acc, nextItem) => {
+        const totalCount = acc + nextItem.count;
+        return totalCount;
+      }, 0);
     },
   },
 });
