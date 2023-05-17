@@ -1,15 +1,45 @@
-<script setup>
+<script>
 import { usePizzaStore } from "@/store/PizzaStore.js";
+import foodsData from "@/assets/foods.json";
 
-const pizzaStore = usePizzaStore();
-pizzaStore.init();
+
+export default {
+  setup() {
+    const pizzaStore = usePizzaStore();
+    return { pizzaStore };
+  },
+  data() {
+    return {
+      products: {},
+    };
+  },
+  mounted() {
+    this.products = foodsData.products.reduce((acc, item) => {
+      const selectedPrice = Array.isArray(item.price)
+        ? item.price[0]
+        : item.price;
+      const selectedSize = Array.isArray(item.sizes)
+        ? item.sizes[0]
+        : item.sizes;
+      return [
+        ...acc,
+        {
+          ...item,
+          selectedPrice,
+          selectedSize,
+          count: 0,
+        },
+      ];
+    }, []);
+  },
+};
 </script>
 
 <template>
   <section>
     <div class="row">
       <div
-        v-for="item in pizzaStore.products"
+        v-for="item in products"
         class="product-card col-lg-3 col-md-4 col-sm-6"
         :key="item.id"
       >

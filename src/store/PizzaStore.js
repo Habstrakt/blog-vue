@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import foodsData from "@/assets/foods.json";
 
 export const usePizzaStore = defineStore("pizzaStore", {
   state: () => ({
@@ -9,26 +8,6 @@ export const usePizzaStore = defineStore("pizzaStore", {
     currentCart: [],
   }),
   actions: {
-    init() {
-      this.products = foodsData.products.reduce((acc, item) => {
-        const selectedPrice = Array.isArray(item.price)
-          ? item.price[0]
-          : item.price;
-        const selectedSize = Array.isArray(item.sizes)
-          ? item.sizes[0]
-          : item.sizes;
-        return [
-          ...acc,
-          {
-            ...item,
-            selectedPrice,
-
-            selectedSize,
-            count: 0,
-          },
-        ];
-      }, []);
-    },
     activeSize(size, item) {
       this.selectedSize = size;
       this.selectedId = item.id;
@@ -62,12 +41,18 @@ export const usePizzaStore = defineStore("pizzaStore", {
     },
     minusItem(index) {
       const item = this.currentCart[index];
-      if (item.count !== 0) {
+      // if (item.count !== 0) {
+      //   item.count--;
+      //   item.price = item.count * item.selectedPrice;
+      // }
+      // if (item.count === 0) {
+      //   this.currentCart.splice(index, 1);
+      // }
+      if (item.count == 1) {
+        this.currentCart.splice(index, 1);
+      } else {
         item.count--;
         item.price = item.count * item.selectedPrice;
-      }
-      if (item.count === 0) {
-        this.currentCart.splice(index, 1);
       }
     },
     plusItem(item) {
