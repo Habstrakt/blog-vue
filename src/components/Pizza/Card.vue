@@ -2,7 +2,6 @@
 import { usePizzaStore } from "@/store/PizzaStore.js";
 import foodsData from "@/assets/foods.json";
 
-
 export default {
   setup() {
     const pizzaStore = usePizzaStore();
@@ -11,31 +10,56 @@ export default {
   data() {
     return {
       products: {},
+      menuItem: ["Все", "Пицца", "Закуски", "Напитки"],
+      selectedCategory: "Все",
     };
   },
   mounted() {
-    this.products = foodsData.products.reduce((acc, item) => {
-      const selectedPrice = Array.isArray(item.price)
-        ? item.price[0]
-        : item.price;
-      const selectedSize = Array.isArray(item.sizes)
-        ? item.sizes[0]
-        : item.sizes;
-      return [
-        ...acc,
-        {
-          ...item,
-          selectedPrice,
-          selectedSize,
-          count: 0,
-        },
-      ];
-    }, []);
+    this.filterProducts("Все");
+  },
+  methods: {
+    filterProducts(category) {
+      if (category === "Все") {
+        this.selectedCategory = "Все";
+      } else {
+        this.selectedCategory = category;
+      }
+      this.products = foodsData.products.reduce((acc, item) => {
+        if (category === "Все" || item.category === category) {
+          const selectedPrice = Array.isArray(item.price)
+            ? item.price[0]
+            : item.price;
+          const selectedSize = Array.isArray(item.sizes)
+            ? item.sizes[0]
+            : item.sizes;
+          return [
+            ...acc,
+            {
+              ...item,
+              selectedPrice,
+              selectedSize,
+              count: 0,
+            },
+          ];
+        }
+        return acc;
+      }, []);
+    },
   },
 };
 </script>
 
 <template>
+  <ul>
+    <li
+      @click="filterProducts(item)"
+      v-for="item in menuItem"
+      class="menu-item"
+      :key="item"
+    >
+      <span>{{ item }}</span>
+    </li>
+  </ul>
   <section>
     <div class="row">
       <div
@@ -97,6 +121,19 @@ section {
 img {
   max-width: 250px;
   margin: 20px;
+}
+ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+}
+li {
+  margin-right: 20px;
+  font-size: 20px;
+  cursor: pointer;
+}
+li:hover {
+  text-shadow: 0 0 10px #ff0000, 0 0 6px #ff0000, 0 0 10px #ff0000;
 }
 .product-img {
   width: 275px;

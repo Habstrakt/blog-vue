@@ -21,8 +21,8 @@
     {
       "id": 3,
       "name": "Салат Цезарь с курицей",
-      "category": "Закуска",
-      "imageUrl": "https://dodopizza-a.akamaihd.net/static/Img/Products/8ed02557247946bc83d3c0af51a8d8a9_138x138.jpeg",
+      "category": "Закуски",
+      "imageUrl": "https://dodopizza-a.akamaihd.net/static/Img/Products/8ed02557247946bc83d3c0af51a8d8a9_584x584.jpeg",
       "description": "Салат с курицей, сыром и соусом цезарь",
       "price": 150
     },
@@ -30,7 +30,7 @@
       "id": 4,
       "name": "Кола",
       "category": "Напитки",
-      "imageUrl": "https://dodopizza-a.akamaihd.net/static/Img/Products/dc74c00bc0634933ba7194b99a164094_138x138.jpeg",
+      "imageUrl": "https://dodopizza-a.akamaihd.net/static/Img/Products/dc74c00bc0634933ba7194b99a164094_584x584.jpeg",
       "description": "Безалкогольный газированный напиток",
       "price": 50
     }

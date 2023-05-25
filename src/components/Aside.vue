@@ -2,7 +2,7 @@
   <div class="col-lg-3">
     <aside>
       <img src="../assets/img/avatar.jpg" alt="" />
-      <p>心臓を捧げよ salute!</p>
+      <p>戦え!</p>
       <div>
         <p>Repository and contacts</p>
         <a href="https://github.com/Habstrakt"

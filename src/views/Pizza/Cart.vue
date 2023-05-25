@@ -4,7 +4,6 @@ import { usePizzaStore } from "@/store/PizzaStore.js";
 export default {
   setup() {
     const pizzaStore = usePizzaStore();
-    console.log(pizzaStore.currentCart);
     return { pizzaStore };
   },
 };
@@ -27,60 +26,77 @@ export default {
             </div>
           </div>
           <div class="col-md-10">
-            <div class="zakaz">Состав заказа</div>
-            <div class="cart_wrapper">
-              <div class="cart_content">
-                <div v-for="(item, index) in pizzaStore.currentCart">
-                  <div class="cart_item d-flex" v-if="item.count > 0">
-                    <div class="img">
-                      <img :src="item.image" alt="" width="100" height="100" />
-                    </div>
-                    <div class="meta">
-                      <div class="product_name d-flex">
-                        {{ item.name }} - {{ item.size }}
+            <div v-if="pizzaStore.currentCart.length > 0">
+              <div class="zakaz">Состав заказа</div>
+              <div class="cart_wrapper">
+                <div class="cart_content">
+                  <div v-for="(item, index) in pizzaStore.currentCart">
+                    <div class="cart_item d-flex" v-if="item.count > 0">
+                      <div class="img">
+                        <img
+                          :src="item.image"
+                          alt=""
+                          width="100"
+                          height="100"
+                        />
+                      </div>
+                      <div class="meta">
+                        <div class="product_name d-flex">
+                          {{ item.name }} - {{ item.size }}
+                        </div>
+                      </div>
+                      <div class="quanity d-flex">
+                        <div
+                          @click="pizzaStore.minusItem(index)"
+                          class="btn btn-danger d-flex minus"
+                        >
+                          -
+                        </div>
+                        <div class="quantity">
+                          <p class="count">
+                            {{ item.count }}
+                          </p>
+                        </div>
+                        <div
+                          @click="pizzaStore.plusItem(item)"
+                          class="btn btn-danger d-flex plus"
+                        >
+                          +
+                        </div>
+                      </div>
+                      <div class="price">
+                        <span>{{ item.count * item.selectedPrice }} ₽</span>
                       </div>
                     </div>
-                    <div class="quanity d-flex">
-                      <div
-                        @click="pizzaStore.minusItem(index)"
-                        class="btn btn-danger d-flex minus"
+                  </div>
+                </div>
+                <div class="return_wrap d-flex">
+                  <router-link :to="{ name: 'pizzas' }" class="return"
+                    >Вернуться в меню</router-link
+                  >
+                </div>
+                <div class="checkout">
+                  <div class="checkout_item">
+                    <div class="buttons d-flex">
+                      <div class="summ d-flex">
+                        К оплате:
+                        <strong>{{ pizzaStore.totalPriceItem }} ₽</strong>
+                      </div>
+                      <router-link
+                        :to="{ name: 'checkout' }"
+                        class="checkout_cart"
+                        >Перейти к оформлению</router-link
                       >
-                        -
-                      </div>
-                      <div class="quantity">
-                        <p class="count">
-                          {{ item.count }}
-                        </p>
-                      </div>
-                      <div
-                        @click="pizzaStore.plusItem(item)"
-                        class="btn btn-danger d-flex plus"
-                      >
-                        +
-                      </div>
-                    </div>
-                    <div class="price">
-                      <span>{{ item.count * item.selectedPrice }}</span>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="return_wrap d-flex">
-                <router-link :to="{ name: 'pizzas' }" class="return"
-                  >Вернуться в меню</router-link
-                >
-              </div>
-              <div class="checkout">
-                <div class="checkout_item">
-                  <div class="buttons d-flex">
-                    <div class="summ d-flex">
-                      К оплате:
-                      <strong>{{ pizzaStore.totalPriceItem }}</strong>
-                    </div>
-                    <div class="checkout_cart">Перейти к оформлению</div>
-                  </div>
-                </div>
-              </div>
+            </div>
+            <div v-else>
+              <p>Ваша корзина пока пуста.</p>
+              <router-link :to="{ name: 'pizzas' }" class="return"
+                >Вернуться в меню</router-link
+              >
             </div>
           </div>
         </div>

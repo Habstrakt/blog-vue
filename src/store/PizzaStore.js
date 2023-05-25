@@ -16,6 +16,7 @@ export const usePizzaStore = defineStore("pizzaStore", {
 
       item.selectedPrice = item.price[sizeIndex];
       item.selectedSize = item.sizes[sizeIndex];
+      console.log(size);
     },
     addToCart(item) {
       const existingItem = this.currentCart.find(
@@ -36,18 +37,10 @@ export const usePizzaStore = defineStore("pizzaStore", {
           selectedPrice: item.selectedPrice,
         };
         this.currentCart.push(cart);
-        console.log(cart);
       }
     },
     minusItem(index) {
       const item = this.currentCart[index];
-      // if (item.count !== 0) {
-      //   item.count--;
-      //   item.price = item.count * item.selectedPrice;
-      // }
-      // if (item.count === 0) {
-      //   this.currentCart.splice(index, 1);
-      // }
       if (item.count == 1) {
         this.currentCart.splice(index, 1);
       } else {
@@ -58,7 +51,6 @@ export const usePizzaStore = defineStore("pizzaStore", {
     plusItem(item) {
       item.count++;
       item.price = item.count * item.selectedPrice;
-      console.log(item);
     },
   },
   getters: {

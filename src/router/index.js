@@ -9,6 +9,7 @@ import Counter from "@/views/Counter.vue";
 import Weather from "@/views/Weather.vue";
 import Pizza from "@/views/Pizza/Main.vue";
 import Cart from "@/views/Pizza/Cart.vue";
+import Checkout from "@/views/Pizza/Checkout.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,6 +25,11 @@ const router = createRouter({
     { path: "/portfolio/weather", name: "weather", component: Weather },
     { path: "/portfolio/pizzas", name: "pizzas", component: Pizza },
     { path: "/portfolio/pizzas/cart", name: "cart", component: Cart },
+    {
+      path: "/portfolio/pizzas/checkout",
+      name: "checkout",
+      component: Checkout,
+    },
   ],
 });
 
