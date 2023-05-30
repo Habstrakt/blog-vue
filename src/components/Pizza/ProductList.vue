@@ -32,13 +32,14 @@ export default {
           const selectedSize = Array.isArray(item.sizes)
             ? item.sizes[0]
             : item.sizes;
+          const count = this.pizzaStore.getItemCount(item);
           return [
             ...acc,
             {
               ...item,
               selectedPrice,
               selectedSize,
-              count: 0,
+              count,
             },
           ];
         }
@@ -73,7 +74,7 @@ export default {
         <div class="product-info">
           <span class="product-title">{{ item.name }}</span>
           <div class="product-description">{{ item.description }}</div>
-          <ul class="product-sizes">
+          <ul>
             <li
               @click="pizzaStore.activeSize(size, item)"
               v-for="size in item.sizes"
@@ -88,6 +89,11 @@ export default {
               }"
             >
               {{ size }}
+              <i
+                class="count-size"
+                v-if="pizzaStore.getItemCountBySize(item, size) > 0"
+                >{{ pizzaStore.getItemCountBySize(item, size) }}</i
+              >
             </li>
           </ul>
         </div>
@@ -170,6 +176,8 @@ li:hover {
   display: flex;
 }
 .size {
+  display: flex;
+  justify-content: center;
   margin-right: 10px;
   background-color: orange;
   color: white;
@@ -177,6 +185,8 @@ li:hover {
   width: 50px;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 18px;
+  padding: 0 5px;
 }
 .active,
 .first_active {
@@ -197,6 +207,13 @@ i {
   position: relative;
   top: 0px;
   left: 3px;
+}
+.count-size {
+  width: 18px;
+  font-size: 10px;
+  height: 18px;
+  margin: 0 auto;
+  line-height: 18px;
 }
 @media screen and (max-width: 414px) {
   .product-card {

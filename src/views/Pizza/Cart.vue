@@ -93,8 +93,8 @@ export default {
               </div>
             </div>
             <div v-else>
-              <p>Ваша корзина пока пуста.</p>
-              <router-link :to="{ name: 'pizzas' }" class="return"
+              <p class="empty-cart">Ваша корзина пока пуста.</p>
+              <router-link :to="{ name: 'pizzas' }" class="return mx-auto"
                 >Вернуться в меню</router-link
               >
             </div>
@@ -245,7 +245,6 @@ strong {
   display: flex;
   height: 48px;
   color: #fff;
-  font-family: TT Pines;
   font-style: normal;
   font-weight: bold;
   font-size: 18px;
@@ -254,5 +253,8 @@ strong {
   text-decoration: none;
   padding: 0 20px;
   cursor: pointer;
+}
+.empty-cart {
+  text-align: center;
 }
 </style>

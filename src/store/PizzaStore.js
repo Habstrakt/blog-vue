@@ -85,5 +85,11 @@ export const usePizzaStore = defineStore("pizzaStore", {
         return totalCount;
       }, 0);
     },
+    getItemCountBySize: (state) => (item, size) => {
+      const cartItem = state.currentCart.find(
+        (cartItem) => cartItem.id === item.id && cartItem.size === size
+      );
+      return cartItem ? cartItem.count : 0;
+    },
   },
 });

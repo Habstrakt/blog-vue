@@ -34,18 +34,20 @@ export default {
     },
   },
   methods: {
-    submitForm() {
-      const cartData = this.pizzaStore.currentCart;
-      const deliveryData = this.pizzaStore.order;
+    submitForm(isValid) {
+      if (!isValid) {
+        const cartData = this.pizzaStore.currentCart;
+        const deliveryData = this.pizzaStore.order;
 
-      const jsonCartData = JSON.stringify(cartData);
-      const jsonDeliveryData = JSON.stringify(deliveryData);
+        const jsonCartData = JSON.stringify(cartData);
+        const jsonDeliveryData = JSON.stringify(deliveryData);
 
-      const file = new Blob([jsonCartData, jsonDeliveryData], {
-        type: "application/json",
-      });
-      const fileURL = URL.createObjectURL(file);
-      window.open(fileURL);
+        const file = new Blob([jsonCartData, jsonDeliveryData], {
+          type: "application/json",
+        });
+        const fileURL = URL.createObjectURL(file);
+        window.location.href = fileURL;
+      }
     },
     selectDelivery(index) {
       const item = this.deliveryMethods[index];
@@ -74,7 +76,6 @@ export default {
     },
     validateName() {
       const isNameLengthValid = this.nameValue.length > 0;
-      console.log(isNameLengthValid);
 
       if (!isNameLengthValid) {
         this.textNameError = "Введите имя!";
@@ -103,7 +104,7 @@ export default {
           </div>
         </div>
         <div class="col-md-10">
-          <div class="cart">
+          <div v-if="pizzaStore.currentCart.length > 0" class="cart">
             <div class="delivery">
               <form
                 method="post"
@@ -242,9 +243,17 @@ export default {
                   >
                     Подтвердить заказ
                   </button>
+                  <router-link :to="{ name: 'pizzas' }" class="return"
+                    >Вернуться в меню</router-link
+                  >
                 </div>
               </form>
             </div>
+          </div>
+          <div v-else>
+            <router-link :to="{ name: 'pizzas' }" class="return m-auto"
+              >Вернуться в меню</router-link
+            >
           </div>
         </div>
       </div>
@@ -384,6 +393,8 @@ li {
 }
 .payment-total {
   margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
 }
 .checkout_button {
   width: 240px;
@@ -400,5 +411,21 @@ li {
   text-decoration: none;
   transition: 0.5s;
   border: 0;
+}
+.return {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d21b04;
+  box-sizing: border-box;
+  border-radius: 16px;
+  width: 160px;
+  height: 30px;
+  color: #1b1b1b;
+  text-decoration: none;
 }
 </style>

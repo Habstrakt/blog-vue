@@ -1,9 +1,9 @@
 <script>
 import Header from "@/components/Pizza/Header.vue";
-import Card from "@/components/Pizza/Card.vue";
+import ProductList from "@/components/Pizza/ProductList.vue";
 
 export default {
-  components: { Header, Card },
+  components: { Header, ProductList },
 };
 </script>
 
@@ -11,7 +11,7 @@ export default {
   <Header />
   <main style="background-color: white">
     <div class="container">
-      <Card />
+      <ProductList />
     </div>
   </main>
 </template>
