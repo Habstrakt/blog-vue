@@ -6,6 +6,18 @@ export const usePizzaStore = defineStore("pizzaStore", {
     selectedSize: null,
     selectedId: null,
     currentCart: [],
+    order: {
+      deliveryMethod: null,
+      paymentMethod: null,
+      deliveryInfo: {
+        phone: null,
+        name: null,
+        email: null,
+        address: null,
+        house: null,
+        apartment: null,
+      },
+    },
   }),
   actions: {
     activeSize(size, item) {
@@ -16,7 +28,6 @@ export const usePizzaStore = defineStore("pizzaStore", {
 
       item.selectedPrice = item.price[sizeIndex];
       item.selectedSize = item.sizes[sizeIndex];
-      console.log(size);
     },
     addToCart(item) {
       const existingItem = this.currentCart.find(
