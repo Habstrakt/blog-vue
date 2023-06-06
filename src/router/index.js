@@ -1,15 +1,17 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Main from "@/views/Main.vue";
-import Post from "@/views/Post.vue";
 import NotFound from "@/views/NotFound.vue";
-import About from "@/views/About.vue";
-import Portfolio from "@/views/Portfolio.vue";
-import Todo from "@/views/Todo.vue";
-import Counter from "@/views/Counter.vue";
-import Weather from "@/views/Weather.vue";
-import Pizza from "@/views/Pizza/Main.vue";
-import Cart from "@/views/Pizza/Cart.vue";
-import Checkout from "@/views/Pizza/Checkout.vue";
+
+const Main = () => import("@/views/Main.vue");
+const Post = () => import("@/views/Post.vue");
+const About = () => import("@/views/About.vue");
+const Portfolio = () => import("@/views/Portfolio.vue");
+const Todo = () => import("@/views/Todo.vue");
+const Counter = () => import("@/views/Counter.vue");
+const Weather = () => import("@/views/Weather.vue");
+const Cart = () => import("@/views/Pizza/Cart.vue");
+const Checkout = () => import("@/views/Pizza/Checkout.vue");
+
+const Pizza = () => import("@/views/Pizza/Main.vue");
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
