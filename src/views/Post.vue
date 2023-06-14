@@ -13,7 +13,7 @@ export default {
   async created() {
     try {
       const response = await axios.get(
-        `http://blog.test/wp-json/wp/v2/posts/${this.id}`
+        `https://63b30db9ea89e3e3db3cb777.mockapi.io/posts/${this.id}`
       );
       this.post = response.data;
       console.log(response.data);
@@ -29,14 +29,13 @@ export default {
     <div class="row">
       <div class="col-lg-12">
         <section>
-          <article v-if="!!post.content">
+          <article v-if="post.body">
             <h3>
               <router-link class="text_title" to="/">
-                {{ post.title.rendered }}
+                {{ post.title }}
               </router-link>
             </h3>
-            <div v-html="post.content.rendered" class="text"></div>
-            <p class="date">{{ post.formatted_date }}</p>
+            <div v-html="post.body" class="text"></div>
           </article>
           <div v-else>
             <Spinner />

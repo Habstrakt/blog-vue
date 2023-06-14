@@ -1,76 +1,70 @@
 <script>
 import axios from "axios";
 import Spinner from "@/components/Spinner.vue";
-import Pagination from "@/components/Pagination.vue";
 import Aside from "@/components/Aside.vue";
+
 export default {
   data() {
     return {
       posts: [],
       currentPage: 1,
-      postsPerPage: 20,
+      postsPerPage: 10,
       showScrollBtn: false,
     };
   },
   components: {
     Spinner,
-    Pagination,
     Aside,
   },
   methods: {
     async getPosts() {
       try {
         const response = await axios.get(
-          "http://blog.test/wp-json/wp/v2/posts"
+          "https://63b30db9ea89e3e3db3cb777.mockapi.io/posts"
         );
-        this.posts = response.data;
+        this.posts = response.data.reverse();
+        this.posts.sort((a, b) => b.id - a.id);
       } catch (error) {
         console.error(error);
       }
     },
-    scrollBtn() {
-      const scrollDuration = 800;
-      const scrollStep = -window.pageYOffset / (scrollDuration / 15);
-      let scrollInterval = setInterval(() => {
-        if (window.pageYOffset !== 0) {
-          window.scrollBy(0, scrollStep);
-        } else {
-          clearInterval(scrollInterval);
-        }
-      }, 15);
-    },
-    handleScroll() {
-      if (window.pageYOffset > 1000) {
-        this.showScrollBtn = true;
-      } else {
-        this.showScrollBtn = false;
+    goToPage(page) {
+      if (page >= 1 && page <= this.totalPages) {
+        this.currentPage = page;
+        this.getPosts();
+        this.updateURL();
       }
     },
-    nextPage() {
-      this.currentPage++;
-      this.scrollBtn();
-    },
-    prevPage() {
-      this.currentPage--;
-      this.scrollBtn();
+    updateURL() {
+      const query = {
+        page: this.currentPage,
+        limit: this.postsPerPage,
+      };
+      this.$router.push({ query });
     },
   },
   mounted() {
+    const { page, limit } = this.$route.query;
+    this.currentPage = page ? parseInt(page) : 1;
+    this.postsPerPage = limit ? parseInt(limit) : 10;
+
     this.getPosts();
-    window.addEventListener("scroll", this.handleScroll);
-  },
-  unmounted() {
-    window.removeEventListener("scroll", this.handleScroll);
   },
   computed: {
     totalPages() {
-      console.log(Math.ceil(this.posts.length / this.postsPerPage));
       return Math.ceil(this.posts.length / this.postsPerPage);
     },
     displayedPosts() {
       const startIndex = (this.currentPage - 1) * this.postsPerPage;
       const endIndex = startIndex + this.postsPerPage;
       return this.posts.slice(startIndex, endIndex);
+    },
+    pageNumbers() {
+      const numbers = [];
+      for (let i = 1; i <= this.totalPages; i++) {
+        numbers.push(i);
+      }
+      return numbers;
     },
   },
 };
@@ -90,11 +84,10 @@ export default {
                     class="text_title"
                     :to="{ name: 'post', params: { id: post.id } }"
                   >
-                    {{ post.title.rendered }}
+                    {{ post.title }}
                   </router-link>
                 </h3>
-                <div v-html="post.content.rendered" class="text"></div>
-                <p class="date">{{ post.formatted_date }}</p>
+                <div v-html="post.body" class="text"></div>
               </article>
             </template>
             <template v-else>
@@ -102,23 +95,15 @@ export default {
             </template>
           </section>
         </main>
-        <div v-if="showScrollBtn" @click="scrollBtn" class="btn btn-secondary">
-          <img src="../assets/img/arrow-up.svg" alt="" />
-        </div>
         <div class="pagination justify-content-end">
           <button
+            v-for="pageNumber in pageNumbers"
+            :key="pageNumber"
             class="btn btn-primary"
-            v-if="currentPage < totalPages"
-            @click="nextPage"
+            :class="{ active: pageNumber === currentPage }"
+            @click="goToPage(pageNumber)"
           >
-            Next
-          </button>
-          <button
-            class="btn btn-primary"
-            v-if="currentPage > 1"
-            @click="prevPage"
-          >
-            Preview
+            {{ pageNumber }}
           </button>
         </div>
       </div>

@@ -13,7 +13,7 @@ export default {
           title: "Список задач",
           url: { name: "todo" },
           text: "Список задач, в котором пользователь может добавлять, удалять и редактировать записи",
-          instruments: ["vue3", "bootstrap"],
+          instruments: ["vue3"],
         },
         {
           title: "Веб-приложение для погоды",
@@ -25,7 +25,7 @@ export default {
           title: "Сайт доставки пиццы",
           url: { name: "pizzas" },
           text: "Сайт пиццерии. Страница продуктов, а так же корзина",
-          instruments: ["vue3", "vuex"],
+          instruments: ["vue3", "pinia"],
         },
       ],
     };
@@ -37,8 +37,12 @@ export default {
     <div class="row">
       <div class="col-lg-12">
         <div class="card-group">
-          <div class="row">
-            <div class="card col-lg-6" v-for="work in portfolios" :key="work">
+          <div class="row justify-content-evenly">
+            <div
+              class="card col-md-5 mb-4"
+              v-for="work in portfolios"
+              :key="work"
+            >
               <div class="card-body">
                 <h5 class="card-title">{{ work.title }}</h5>
                 <p class="card-text">
@@ -73,9 +77,9 @@ export default {
   margin-top: 21px;
 }
 .card-text {
-  height: 60px;
+  max-height: fit-content;
 }
 .card-footer {
-  background-color: inherit;
+  padding: 8px;
 }
 </style>

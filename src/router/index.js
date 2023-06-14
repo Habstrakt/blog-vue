@@ -13,7 +13,7 @@ const Checkout = () => import("@/views/Pizza/Checkout.vue");
 
 const Pizza = () => import("@/views/Pizza/Main.vue");
 
-const router = createRouter({
+const routes = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     { path: "/", name: "main", component: Main },
@@ -35,4 +35,4 @@ const router = createRouter({
   ],
 });
 
-export default router;
+export default routes;

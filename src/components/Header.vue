@@ -33,10 +33,6 @@ export default {
           url: { name: "portfolio" },
         },
         {
-          name: "/b/",
-          url: "/bred",
-        },
-        {
           name: "About",
           url: "/about",
         },
@@ -73,7 +69,7 @@ li {
   color: #fff;
 }
 .logo {
-  width: 177px;
+  max-width: 150px;
 }
 @media screen and (max-width: 414px) {
   .menu-items {
