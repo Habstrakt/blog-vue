@@ -58,7 +58,7 @@ export default {
                           </p>
                         </div>
                         <div
-                          @click="pizzaStore.plusItem(item)"
+                          @click="pizzaStore.plusItem(index)"
                           class="btn btn-danger d-flex plus"
                         >
                           +
